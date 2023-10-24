@@ -50,3 +50,41 @@ resource "aws_athena_named_query" "cloudfront_logs_saved_query" {
   database = var.create_database == true ? aws_athena_database.access_logs_athena_database[0].name : var.database_name
   query    = var.queries[count.index].query
 }
+
+## QUERY OUTPUT BUCKET
+resource "aws_s3_bucket" "athena_query_bucket" {
+  bucket = "athena_output-${var.database_name}" 
+}
+
+resource "aws_s3_bucket_ownership_controls" "athena_query_oc" {
+  bucket = aws_s3_bucket.athena_query_bucket.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "athena_query_acl" {
+  depends_on = [aws_s3_bucket_ownership_controls.athena_query_oc]
+
+  bucket = aws_s3_bucket.athena_query_bucket.id
+  acl    = "private"
+}
+
+resource "aws_athena_workgroup" "example" {
+  name = "${var.database_name}-athena_workgroup"
+
+  configuration {
+    enforce_workgroup_configuration    = true
+    publish_cloudwatch_metrics_enabled = true
+
+    result_configuration {
+      # output_location = "s3://${aws_s3_bucket.s3_athena_query_bucket.bucket}/output/"
+      output_location = "s3://${var.s3_bucket.s3_athena_query_bucket.bucket}/output"
+
+      # encryption_configuration {
+      #   encryption_option = "SSE_KMS"
+      #   kms_key_arn       = aws_kms_key.example.arn
+      # }
+    }
+  }
+}
