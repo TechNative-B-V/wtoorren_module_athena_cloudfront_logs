@@ -94,10 +94,10 @@ resource "aws_athena_workgroup" "example" {
     result_configuration {
       output_location = "s3://${aws_s3_bucket.athena_query_results.bucket}/output/"
 
-      encryption_configuration {
-        encryption_option = "SSE_KMS"
-        kms_key_arn       = aws_kms_key.example.arn
-      }
+      # encryption_configuration {
+      #   encryption_option = "SSE_KMS"
+      #   kms_key_arn       = aws_kms_key.example.arn
+      # }
     }
   }
 }
