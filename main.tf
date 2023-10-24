@@ -53,7 +53,7 @@ resource "aws_athena_named_query" "cloudfront_logs_saved_query" {
 
 ## QUERY OUTPUT BUCKET
 resource "aws_s3_bucket" "athena_query_bucket" {
-  bucket = "athena_output-${var.database_name}" 
+  bucket = "athena-output-${var.database_name}" 
 }
 
 resource "aws_s3_bucket_ownership_controls" "athena_query_oc" {
