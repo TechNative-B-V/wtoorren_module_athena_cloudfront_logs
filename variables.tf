@@ -28,3 +28,8 @@ variable "create_database" {
   default     = true
   description = "Variable that decides the database creation. If false is passed, it will just use the database that is available already. If true is passed, it will create a new database."
 }
+
+variable "env" {
+  type = string
+  description = "Environment"
+}

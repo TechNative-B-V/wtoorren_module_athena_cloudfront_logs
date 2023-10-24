@@ -61,6 +61,15 @@ resource "aws_athena_workgroup" "example" {
   }
 }
 
+module "athena_output" {
+  source = "./athena_output"
+
+  bucket_name    = "your-athena-query-results-bucket"
+  workgroup_name = "example-workgroup"
+  env = var.env
+}
+
+
 # resource "aws_athena_named_query" "cloudfront_logs_saved_query" {
 #   name     = var.queries.*.name
 #   database = var.create_database == true ? aws_athena_database.access_logs_athena_database[0].name : var.database_name
