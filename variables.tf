@@ -33,17 +33,3 @@ variable "env" {
   type = string
   description = "Environment"
 }
-
-variable "athena_query_output_bucket_name" {
-  description = "Name of the Athena query results S3 bucket"
-  type        = string
-}
-
-variable "workgroup_name" {
-  description = "Name of the Athena workgroup"
-  type        = string
-}
-
-variable "athena_query_results" {
-  type = string
-}
