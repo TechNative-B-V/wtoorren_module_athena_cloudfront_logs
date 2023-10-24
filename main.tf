@@ -6,7 +6,10 @@ locals {
 resource "aws_athena_database" "access_logs_athena_database" {
   count  = var.create_database == true ? 1 : 0
   name   = local.athena_db_name_snake_case
-  bucket = var.s3_bucket_name
+  # bucket = var.s3_bucket_name
+  # resource "aws_s3_bucket" "athena_query_bucket" {
+  bucket = aws_s3_bucket.athena_query_bucket.bucket
+  depends_on = [ aws_s3_bucket.athena_query_bucket ]
 }
 
 resource "aws_glue_catalog_table" "cloudfront_logs_catalog_table" {
