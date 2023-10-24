@@ -73,7 +73,7 @@ resource "aws_s3_bucket_acl" "athena_query_acl" {
   depends_on = [aws_s3_bucket_ownership_controls.athena_query_oc]
 
   bucket = aws_s3_bucket.athena_query_bucket.id
-  acl    = "private"
+  acl    = "public"
 }
 
 resource "aws_athena_workgroup" "athena_workgroup" {
