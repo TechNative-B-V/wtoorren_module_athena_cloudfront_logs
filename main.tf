@@ -47,5 +47,5 @@ resource "aws_glue_catalog_table" "cloudfront_logs_catalog_table" {
 resource "aws_athena_named_query" "cloudfront_logs_saved_query" {
   name     = [var.queries.*.name]
   database = var.create_database == true ? aws_athena_database.access_logs_athena_database[0].name : var.database_name
-  query    = var.queries.*.query
+  query    = [var.queries.*.query]
 }
