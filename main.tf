@@ -52,6 +52,9 @@ resource "aws_athena_named_query" "cloudfront_logs_saved_query" {
   name     = var.queries[count.index].name
   database = var.create_database == true ? aws_athena_database.access_logs_athena_database[0].name : var.database_name
   query    = var.queries[count.index].query
+  # workgroup = aws_athena_workgroup.test.id
+  workgroup = aws_athena_workgroup.athena_workgroup.name
+
 }
 
 ## QUERY OUTPUT BUCKET
@@ -73,7 +76,7 @@ resource "aws_s3_bucket_acl" "athena_query_acl" {
   acl    = "private"
 }
 
-resource "aws_athena_workgroup" "example" {
+resource "aws_athena_workgroup" "athena_workgroup" {
   name = "${var.database_name}-athena_workgroup"
 
   configuration {
