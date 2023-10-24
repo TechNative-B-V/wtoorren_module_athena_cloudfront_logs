@@ -43,8 +43,3 @@ variable "workgroup_name" {
   description = "Name of the Athena workgroup"
   type        = string
 }
-
-variable "env" {
-  type = string
-  description = "environment"
-}
